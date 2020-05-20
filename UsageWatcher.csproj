@@ -43,9 +43,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="KeyboardHook.cs" />
-    <Compile Include="MouseDetector.cs" />
+    <Compile Include="Model\Resolution.cs" />
+    <Compile Include="Model\UsageModel.cs" />
+    <Compile Include="Model\UsageType.cs" />
+    <Compile Include="Service\UsageService.cs" />
+    <Compile Include="UsageStore.cs" />
+    <Compile Include="UsageWatcher.cs" />
+    <Compile Include="Native\KeyboardHook.cs" />
+    <Compile Include="Native\MouseDetector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
