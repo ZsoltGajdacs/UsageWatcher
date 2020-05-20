@@ -170,7 +170,7 @@ namespace UsageWatcher.Native
         /// Modify the relevant sections and return type 
         /// depending on what you want to do with modifier keys.
         /// </summary>
-        private void CheckModifiers()
+        private static void CheckModifiers()
         {
             StringBuilder sb = new StringBuilder();
 
@@ -353,8 +353,6 @@ namespace UsageWatcher.Native
                 }
 
                 NativeMethods.UnhookWindowsHookEx(hookID);
-                // free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // set large fields to null.
 
                 disposedValue = true;
             }

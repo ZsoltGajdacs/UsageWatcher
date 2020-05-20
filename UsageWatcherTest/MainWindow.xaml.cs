@@ -21,17 +21,19 @@ namespace UsageWatcherTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        KeyboardHook hook;
+        private Watcher watcher;
         public MainWindow()
         {
             InitializeComponent();
-            hook = new KeyboardHook(KeyboardHook.Parameters.PassAllKeysToNextApp);
-            hook.KeyIntercepted += Hook_KeyIntercepted;
+            
+            watcher = new Watcher(Resolution.HALF_MINUTE);
         }
 
-        private void Hook_KeyIntercepted(object sender, KeyboardHook.KeyboardHookEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string name = e.KeyName;
+            TimeSpan usage = watcher.UsageSoFar();
+            MessageBox.Show(usage.ToString(), "Eddigi használat", MessageBoxButton.OK,
+                MessageBoxImage.Information, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
         }
     }
 }

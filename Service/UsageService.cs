@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
+using System;
 using UsageWatcher.Model;
 using UsageWatcher.Native;
+using UsageWatcher.Storage;
 
 namespace UsageWatcher.Service
 {
-    internal class UsageService
+    internal class UsageService : IDisposable
     {
         private KeyboardHook keyboard;
         private MouseDetector mouse;
@@ -22,8 +20,15 @@ namespace UsageWatcher.Service
             keyboard = new KeyboardHook(KeyboardHook.Parameters.PassAllKeysToNextApp);
             keyboard.KeyIntercepted += Keyboard_KeyIntercepted;
 
-            mouse = new MouseDetector(store.Resolution);
+            mouse = new MouseDetector(store.ChosenResolution);
             mouse.MouseMoved += Mouse_MouseMoved;
+
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnWindowsLockUnlock);
+        }
+
+        public TimeSpan UsageSoFar()
+        {
+            return store.CalculateUsageSoFar();
         }
 
         private void Mouse_MouseMoved(object sender, System.Windows.Point p)
@@ -34,6 +39,25 @@ namespace UsageWatcher.Service
         private void Keyboard_KeyIntercepted(object sender, KeyboardHook.KeyboardHookEventArgs e)
         {
             store.AddUsage(UsageType.KEYBOARD);
+        }
+
+        private void OnWindowsLockUnlock(object sender, SessionSwitchEventArgs e)
+        {
+            if (e.Reason == SessionSwitchReason.SessionLock)
+            {
+                store.IsInLockdown = true;
+            }
+            else if (e.Reason == SessionSwitchReason.SessionUnlock)
+            {
+                store.IsInLockdown = false;
+            }
+        }
+
+        public void Dispose()
+        {
+            store.Dispose();
+            keyboard.Dispose();
+            mouse.Dispose();
         }
     }
 }
