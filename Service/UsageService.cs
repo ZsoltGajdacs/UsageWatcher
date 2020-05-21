@@ -31,6 +31,11 @@ namespace UsageWatcher.Service
             return store.CalculateUsageSoFar();
         }
 
+        public TimeSpan UsageForTime(DateTime startTime, DateTime endTime)
+        {
+            return store.CalculateUsageSoFar(startTime, endTime);
+        }
+
         private void Mouse_MouseMoved(object sender, System.Windows.Point p)
         {
             store.AddUsage(UsageType.MOUSE);

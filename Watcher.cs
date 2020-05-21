@@ -24,9 +24,22 @@ namespace UsageWatcher
             uService = new UsageService(store);
         }
 
+        /// <summary>
+        /// Gives back the time since recording began
+        /// </summary>
+        /// <returns></returns>
         public TimeSpan UsageSoFar()
         {
             return uService.UsageSoFar();
+        }
+
+        /// <summary>
+        /// Gives back the time inbeetween the given times
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan UsageForGivenTimeframe(DateTime startTime, DateTime endTime)
+        {
+            return uService.UsageForTime(startTime, endTime);
         }
 
         #region IDisposable Support

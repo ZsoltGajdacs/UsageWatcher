@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using UsageWatcher.Model;
 
@@ -70,6 +71,18 @@ namespace UsageWatcher.Storage
         public TimeSpan CalculateUsageSoFar()
         {
             int totalMillisecs = (int)ChosenResolution * usage.Count;
+            return TimeSpan.FromMilliseconds(totalMillisecs);
+        }
+
+        //TODO: Create a more fine grained check based on the usagemodel resolutions. 
+        //This would make it possible to slice usages if the intersect with start / end times
+        public TimeSpan CalculateUsageSoFar(DateTime startTime, DateTime endTime)
+        {
+            List<UsageModel> filteredUsages = usage
+                .Where(u => (u.StartTime >= startTime) && (u.EndTime <= endTime))
+                .ToList();
+
+            int totalMillisecs = (int)ChosenResolution * filteredUsages.Count;
             return TimeSpan.FromMilliseconds(totalMillisecs);
         }
 
