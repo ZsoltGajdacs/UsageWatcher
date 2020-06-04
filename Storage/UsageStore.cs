@@ -10,22 +10,29 @@ namespace UsageWatcher.Storage
     {
         private Resolution _resolution;
 
+        private bool saveToTempStore;
         private List<UsageModel> usage;
         private Timer resolutionTimer;
+        private DateTime startupTime;
+        private DateTime lastSyncDate;
 
         internal bool IsInLockdown { get; set; }
 
         public Resolution ChosenResolution { get => _resolution; }
 
-        public UsageStore(Resolution resolution)
+        public UsageStore(Resolution resolution, bool saveDataToTempStorage)
         {
             usage = new List<UsageModel>();
             _resolution = resolution;
+            saveToTempStore = saveDataToTempStorage;
+            startupTime = DateTime.Now;
 
             resolutionTimer = new Timer((int)resolution);
             resolutionTimer.Elapsed += ResolutionTimer_Elapsed;
             resolutionTimer.AutoReset = false;
             resolutionTimer.Enabled = false;
+
+            SetupTempSave(saveToTempStore);
         }
 
         public void AddUsage(UsageType type)
@@ -70,20 +77,33 @@ namespace UsageWatcher.Storage
 
         public TimeSpan CalculateUsageSoFar()
         {
+            lastSyncDate = DateTime.Now;
             int totalMillisecs = (int)ChosenResolution * usage.Count;
             return TimeSpan.FromMilliseconds(totalMillisecs);
         }
 
         //TODO: Create a more fine grained check based on the usagemodel resolutions. 
-        //This would make it possible to slice usages if the intersect with start / end times
+        //This would make it possible to slice usages if they intersect with start / end times
         public TimeSpan CalculateUsageSoFar(DateTime startTime, DateTime endTime)
         {
+            lastSyncDate = DateTime.Now;
             List<UsageModel> filteredUsages = usage
                 .Where(u => (u.StartTime >= startTime) && (u.EndTime <= endTime))
                 .ToList();
 
             int totalMillisecs = (int)ChosenResolution * filteredUsages.Count;
             return TimeSpan.FromMilliseconds(totalMillisecs);
+        }
+
+        /// <summary>
+        /// Returns usage data since the last sync time, 
+        /// or if there never was a sync than since startup
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan CalculateUsageSinceLastSync()
+        {
+            DateTime startTime = lastSyncDate == default ? startupTime : lastSyncDate;
+            return CalculateUsageSoFar(startTime, DateTime.Now);
         }
 
         private UsageModel GetLastUsage()
@@ -101,6 +121,26 @@ namespace UsageWatcher.Storage
             UsageModel lastUsage = GetLastUsage();
             lastUsage.EndTime = DateTime.Now;
         }
+
+        private static void SetupTempSave(bool saveToTempStore)
+        {
+            if (saveToTempStore)
+            {
+
+            }
+        }
+
+        internal static string GetTempStorageFileLocation()
+        {
+            return GetTempDirLocation() + "usagestore.json";
+        }
+
+        internal static string GetTempDirLocation()
+        {
+            string userAppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return userAppData + "\\Usagewatcher";
+        }
+
         public void Dispose()
         {
             ((IDisposable)resolutionTimer).Dispose();

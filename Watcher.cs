@@ -18,9 +18,11 @@ namespace UsageWatcher
         /// will be considered an active time
         /// </summary>
         /// <param name="resolution">The smallest timeframe the software will watch for</param>
-        public Watcher(Resolution chosenResolution)
+        /// <param name="saveDataToTempStorage">By setting this to true, the lib will save it's daily date 
+        /// to a temp storage so it can keep data in case of early shutdown</param>
+        public Watcher(Resolution chosenResolution, bool saveDataToTempStorage = false)
         {
-            UsageStore store = new UsageStore(chosenResolution);
+            UsageStore store = new UsageStore(chosenResolution, saveDataToTempStorage);
             uService = new UsageService(store);
         }
 
@@ -34,7 +36,17 @@ namespace UsageWatcher
         }
 
         /// <summary>
-        /// Gives back the time inbeetween the given times
+        /// Gives back the usage time since the last sync time, or if this is the first sync, than
+        /// since startup
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan UsageSinceLastAccess()
+        {
+            return uService.UsageSinceLastSync();
+        }
+
+        /// <summary>
+        /// Gives back the time inbetween the given times
         /// </summary>
         /// <returns></returns>
         public TimeSpan UsageForGivenTimeframe(DateTime startTime, DateTime endTime)
