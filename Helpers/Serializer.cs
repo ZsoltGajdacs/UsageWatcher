@@ -76,18 +76,15 @@ namespace UsageWatcher.Helpers
 
         private static void CreateBackupIfNeeded(string path, DoBackup doBackup)
         {
-            if (DoBackup.Yes == doBackup)
+            if (DoBackup.Yes == doBackup && File.Exists(path))
             {
-                if (File.Exists(path))
+                string backupPath = path + ".bak";
+                if (File.Exists(backupPath))
                 {
-                    string backupPath = path + ".bak";
-                    if (File.Exists(backupPath))
-                    {
-                        File.Delete(backupPath);
-                    }
-
-                    File.Copy(path, backupPath);
+                    File.Delete(backupPath);
                 }
+
+                File.Copy(path, backupPath);
             }
         }
     }

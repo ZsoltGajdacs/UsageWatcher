@@ -28,14 +28,11 @@ namespace UsageWatcher.Storage
 
         public void AddUsage()
         {
-            if (!isInLockdown)
+            if (!isInLockdown && HasLastTimeFramePassed())
             {
-                if (HasLastTimeFramePassed())
-                {
-                    usageKeeper.AddUsage(DateTime.Now);
+                usageKeeper.AddUsage(DateTime.Now);
 
-                    timer.Start();
-                }
+                timer.Start();
             }
         }
 

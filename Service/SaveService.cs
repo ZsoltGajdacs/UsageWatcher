@@ -49,7 +49,7 @@ namespace UsageWatcher.Service
 
                 case DataPrecision.LowPrecision:
                     throw new NotImplementedException();
-                    //break;
+                //break;
 
                 default:
                     break;

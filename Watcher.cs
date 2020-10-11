@@ -23,13 +23,13 @@ namespace UsageWatcher
         /// <param name="resolution">The smallest timeframe the software will watch for</param>
         /// <param name="SavePreference">Dictates how usage data will be saved/stored</param>
         /// <param name="dataPrecision">Sets how fine grained the data will be</param>
-        public Watcher(string appName, Resolution chosenResolution, 
+        public Watcher(string appName, Resolution chosenResolution,
                                     SavePreference preference, DataPrecision dataPrecision)
         {
             ISaveService saveService = new SaveService(appName, preference, dataPrecision);
             IUsageKeeper keeper = CreateKeeper(ref saveService, dataPrecision, chosenResolution);
             IStorage store = new UsageStore(keeper);
-            
+
             wService = new WatcherService(ref store, ref saveService);
         }
 
@@ -38,7 +38,7 @@ namespace UsageWatcher
             return wService.UsageForGivenTimeframe(startTime, endTime);
         }
 
-        private static IUsageKeeper CreateKeeper(ref ISaveService saveService, 
+        private static IUsageKeeper CreateKeeper(ref ISaveService saveService,
                                                                     DataPrecision dataPrecision, Resolution chosenResolution)
         {
             IUsageKeeper keeper = saveService.GetSavedUsages();
@@ -53,7 +53,7 @@ namespace UsageWatcher
 
                     case DataPrecision.LowPrecision:
                         throw new NotImplementedException();
-                        //break;
+                    //break;
 
                     default:
                         break;

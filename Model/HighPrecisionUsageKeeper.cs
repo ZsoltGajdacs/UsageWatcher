@@ -19,9 +19,9 @@ namespace UsageWatcher.Model
         }
 
         [JsonConstructor]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
             "IDE0051:Remove unused private members", Justification = "Only for Json it is used")]
-        private HighPrecisionUsageKeeper(Resolution res, 
+        private HighPrecisionUsageKeeper(Resolution res,
                         ConcurrentDictionary<DateTime, List<UsageModel>> usages) : this(res)
         {
             Usages = usages ?? throw new ArgumentNullException(nameof(usages));
@@ -69,7 +69,7 @@ namespace UsageWatcher.Model
         {
             DateTime endTime = startTime + TimeSpan.FromMilliseconds((double)Res);
 
-            return usages.Where(u => u.StartTime <= startTime && u.EndTime >= endTime).Any();
+            return usages.Any(u => u.StartTime <= startTime && u.EndTime >= endTime);
         }
 
         private void GetUsagesOfDate(DateTime date, out List<UsageModel> usages)
