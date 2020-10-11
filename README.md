@@ -16,3 +16,7 @@ There is a probe project included, this line is taken from there:
 ```
 IWatcher watcher = new Watcher("testApp", Resolution.HalfMinute, SavePreference.KeepDataForToday, DataPrecision.HighPrecision);
 ```
+Then you can just ask, also from the probe project:
+~~~
+TimeSpan usage = watcher.UsageForGivenTimeframe(startTime, startTime + TimeSpan.FromDays(1));
+~~~
