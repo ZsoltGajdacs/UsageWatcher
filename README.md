@@ -10,3 +10,9 @@ If the computer is locked usage is not counted.
 
 ## What it doesn't do
 It's not logging anything. Neither software usage, nor which keys were pressed. You can check.
+
+## Usage
+There is a probe project included, this line is taken from there:
+```
+IWatcher watcher = new Watcher("testApp", Resolution.HalfMinute, SavePreference.KeepDataForToday, DataPrecision.HighPrecision);
+```
