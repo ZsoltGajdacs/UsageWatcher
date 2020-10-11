@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UsageWatcher.Events
+﻿namespace UsageWatcher.Events
 {
 
     internal delegate void ResolutionPassedEventHandler();

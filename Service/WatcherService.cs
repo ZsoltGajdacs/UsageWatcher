@@ -1,5 +1,4 @@
 ﻿using System;
-using UsageWatcher.Model;
 using UsageWatcher.Native;
 using UsageWatcher.Storage;
 

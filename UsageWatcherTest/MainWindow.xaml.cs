@@ -14,7 +14,7 @@ namespace UsageWatcherTest
             InitializeComponent();
 
             startTime = DateTime.Now;
-            watcher = new Watcher("testApp", Resolution.HalfMinute, 
+            watcher = new Watcher("testApp", Resolution.HalfMinute,
                 SavePreference.KeepDataForToday, DataPrecision.HighPrecision);
         }
 
