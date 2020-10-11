@@ -8,7 +8,7 @@ namespace UsageWatcherTest
     {
         private readonly IWatcher watcher;
 
-        private DateTime startTime;
+        private readonly DateTime startTime;
         public MainWindow()
         {
             InitializeComponent();
