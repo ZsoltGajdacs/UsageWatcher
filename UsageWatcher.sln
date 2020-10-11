@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageWatcher", "UsageWatcher.csproj", "{237FD0B5-EB31-4A8A-AA70-7B2AFCEDB6BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageWatcherTest", "UsageWatcherTest\UsageWatcherTest.csproj", "{7DAFE9F2-1FCE-49E1-8D4D-237D18A64B23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageWatcherProbe", "UsageWatcherTest\UsageWatcherProbe.csproj", "{7DAFE9F2-1FCE-49E1-8D4D-237D18A64B23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -63,9 +63,9 @@ namespace UsageWatcher.Native
         }
 
         //Internal parameters
-        private bool PassAllKeysToNextApp = false;
-        private bool AllowAltTab = false;
-        private bool AllowWindowsKey = false;
+        private bool PassAllKeysToNextApp;
+        private bool AllowAltTab;
+        private bool AllowWindowsKey;
 
         //Keyboard API constants
         private const int WH_KEYBOARD_LL = 13;
@@ -341,7 +341,7 @@ namespace UsageWatcher.Native
         }*/
         #endregion
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {

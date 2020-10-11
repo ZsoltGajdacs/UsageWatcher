@@ -9,16 +9,18 @@ namespace UsageWatcher.Native
     {
         private Point lastMousePos;
 
-        private Timer timer;
+        private readonly Timer timer;
 
         internal event MouseMovedEventHandler MouseMoved;
         internal delegate void MouseMovedEventHandler(object sender, Point p);
 
-        public MouseDetector(Resolution resolution)
+        public MouseDetector(Resolution resolution, DataPrecision precision)
         {
             lastMousePos = MouseDetector.GetMousePosition();
 
-            timer = new Timer((int)resolution);
+            double frequency = CalcTimerFrequency(resolution, precision);
+
+            timer = new Timer(frequency);
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
             timer.Start();
@@ -59,6 +61,12 @@ namespace UsageWatcher.Native
             NativeMethods.Win32Point w32Mouse = new NativeMethods.Win32Point();
             NativeMethods.GetCursorPos(ref w32Mouse);
             return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+        private static double CalcTimerFrequency(Resolution resolution, DataPrecision precision)
+        {
+            double slashAmount = precision == DataPrecision.HighPrecision ? 4 : 2;
+            return (double)resolution / slashAmount;
         }
 
         #endregion
