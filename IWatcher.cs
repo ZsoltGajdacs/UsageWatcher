@@ -2,7 +2,7 @@
 
 namespace UsageWatcher
 {
-    public interface IWatcher
+    public interface IWatcher : IDisposable
     {
         /// <summary>
         /// Gives back usage time inbetween the given dates
