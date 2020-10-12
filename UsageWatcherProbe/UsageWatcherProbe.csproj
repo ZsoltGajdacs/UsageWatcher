@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>UsageWatcherTest.App</StartupObject>
+    <StartupObject>UsageWatcherProbe.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

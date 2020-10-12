@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace UsageWatcherTest
+namespace UsageWatcherProbe
 {
     /// <summary>
     /// Interaction logic for App.xaml

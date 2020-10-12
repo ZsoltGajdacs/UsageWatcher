@@ -2,7 +2,7 @@
 using System.Windows;
 using UsageWatcher;
 
-namespace UsageWatcherTest
+namespace UsageWatcherProbe
 {
     public partial class MainWindow : Window
     {
