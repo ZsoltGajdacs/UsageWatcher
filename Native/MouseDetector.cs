@@ -33,6 +33,8 @@ namespace UsageWatcher.Native
             if (currentMousePos != lastMousePos)
             {
                 OnMouseMoved(currentMousePos);
+
+                lastMousePos = currentMousePos;
             }
         }
 
