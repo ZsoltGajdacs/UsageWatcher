@@ -20,12 +20,12 @@ namespace UsageWatcher.Service
             this.precision = precision;
         }
 
-        public void Save(IUsageKeeper keeper, DateTime startupTime)
+        public void Save(IUsageKeeper keeper)
         {
             switch (preference)
             {
                 case SavePreference.KeepDataForToday:
-                    SaveOnlyKeepingToday(ref keeper, startupTime);
+                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
                     break;
 
                 case SavePreference.KeepDataForever:
@@ -68,9 +68,9 @@ namespace UsageWatcher.Service
             return precision;
         }
 
-        private void SaveOnlyKeepingToday(ref IUsageKeeper keeper, DateTime startupTime)
+        private void SaveOnlyKeepingDate(ref IUsageKeeper keeper, DateTime date)
         {
-            keeper.EraseUsageNotOfDate(startupTime.Date);
+            keeper.EraseUsageNotOfDate(date.Date);
 
             Serializer.JsonObjectSerialize(GetSaveDirLocation(), GetSaveFileName(), ref keeper, DoBackup.Yes);
         }

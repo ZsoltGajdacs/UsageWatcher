@@ -34,7 +34,7 @@ namespace UsageWatcher.Service
         #region Event Handlers
         private void Store_TimerElasped()
         {
-            saveService.Save(store.GetUsageKeeper(), store.GetStartupTime());
+            saveService.Save(store.GetUsageKeeper());
         }
 
         private void Mouse_MouseMoved(object sender, System.Windows.Point p)
