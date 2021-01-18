@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UsageWatcher.Model;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
@@ -36,6 +37,16 @@ namespace UsageWatcher
         public TimeSpan UsageForGivenTimeframe(DateTime startTime, DateTime endTime)
         {
             return wService.UsageForGivenTimeframe(startTime, endTime);
+        }
+
+        public List<UsageBlock> UsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            return wService.UsageListForGivenTimeFrame(startTime, endTime);
+        }
+
+        public List<UsageBlock> NotUsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            return wService.NotUsageListForGivenTimeFrame(startTime, endTime);
         }
 
         private static IUsageKeeper CreateKeeper(ref ISaveService saveService,

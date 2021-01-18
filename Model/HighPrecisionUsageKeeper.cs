@@ -41,15 +41,80 @@ namespace UsageWatcher.Model
 
         public TimeSpan GetUsageForDateRange(DateTime start, DateTime finish)
         {
-            GetUsagesOfDate(start.Date, out List<UsageModel> usages);
-
-            List<UsageModel> filteredUsages = usages
-            .Where(u => (u.StartTime >= start) && (u.EndTime <= finish))
-            .ToList();
+            List<UsageModel> filteredUsages = ComposeListOfUsages(start, finish);
 
             int totalMillisecs = (int)Res * filteredUsages.Count;
 
             return TimeSpan.FromMilliseconds(totalMillisecs);
+        }
+
+        public List<UsageBlock> UsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            List<UsageModel> filteredUsages = ComposeListOfUsages(startTime, endTime);
+
+            List<UsageBlock> blockList = new List<UsageBlock>();
+            UsageBlock block = new UsageBlock();
+            foreach (UsageModel usage in filteredUsages)
+            {
+                if (block.StartTime == default && block.EndTime == default)
+                {
+                    block.StartTime = usage.StartTime;
+                    block.EndTime = usage.EndTime;
+                }
+
+                if ((usage.StartTime - block.EndTime) <= TimeSpan.FromMilliseconds((int)Res))
+                {
+                    block.EndTime = usage.EndTime;
+                }
+                else
+                {
+                    blockList.Add(block);
+                    block = new UsageBlock(usage.StartTime, usage.EndTime);
+                }
+            }
+
+            if (!blockList.Any(sm => sm.Id == block.Id))
+            {
+                blockList.Add(block);
+            }
+
+            return blockList;
+        }
+
+        public List<UsageBlock> NotUsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            List<UsageBlock> usageList = UsageListForGivenTimeFrame(startTime, endTime);
+
+            List<UsageBlock> notUsageList = new List<UsageBlock>();
+            UsageBlock notUsageBlock = new UsageBlock();
+            bool isValueWrittenInRound;
+            foreach (UsageBlock block in usageList)
+            {
+                isValueWrittenInRound = false;
+
+                if (notUsageBlock.StartTime == default && notUsageBlock.EndTime == default && isValueWrittenInRound == false)
+                {
+                    notUsageBlock.StartTime = block.EndTime;
+                    isValueWrittenInRound = true;
+                }
+
+                if (notUsageBlock.EndTime == default && notUsageBlock.StartTime != default && isValueWrittenInRound == false)
+                {
+                    notUsageBlock.EndTime = block.StartTime;
+                    isValueWrittenInRound = true;
+                }
+
+                if (notUsageBlock.StartTime != default && notUsageBlock.EndTime != default && isValueWrittenInRound == true)
+                {
+                    notUsageList.Add(notUsageBlock);
+                    notUsageBlock = new UsageBlock
+                    {
+                        StartTime = block.EndTime
+                    };
+                }
+            }
+
+            return notUsageList;
         }
 
         public Resolution GetResolution()
@@ -63,6 +128,15 @@ namespace UsageWatcher.Model
 
             Usages = new ConcurrentDictionary<DateTime, List<UsageModel>>();
             Usages.TryAdd(date.Date, usages);
+        }
+
+        private List<UsageModel> ComposeListOfUsages(DateTime start, DateTime finish)
+        {
+            GetUsagesOfDate(start.Date, out List<UsageModel> usages);
+
+            return usages
+            .Where(u => (u.StartTime >= start) && (u.EndTime <= finish))
+            .ToList();
         }
 
         private bool IsInRecordedTimeframe(DateTime startTime, ref List<UsageModel> usages)

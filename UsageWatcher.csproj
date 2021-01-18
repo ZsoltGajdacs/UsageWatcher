@@ -60,6 +60,7 @@
     <Compile Include="IWatcher.cs" />
     <Compile Include="Model\HighPrecisionUsageKeeper.cs" />
     <Compile Include="Model\IUsageKeeper.cs" />
+    <Compile Include="Model\UsageBlock.cs" />
     <Compile Include="Model\UsageTimer.cs" />
     <Compile Include="Enums\Resolution.cs" />
     <Compile Include="Model\UsageModel.cs" />

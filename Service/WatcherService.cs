@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UsageWatcher.Model;
 using UsageWatcher.Native;
 using UsageWatcher.Storage;
 
@@ -29,6 +31,16 @@ namespace UsageWatcher.Service
         public TimeSpan UsageForGivenTimeframe(DateTime startTime, DateTime endTime)
         {
             return store.GetUsageKeeper().GetUsageForDateRange(startTime, endTime);
+        }
+
+        public List<UsageBlock> UsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            return store.GetUsageKeeper().UsageListForGivenTimeFrame(startTime, endTime);
+        }
+
+        public List<UsageBlock> NotUsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            return store.GetUsageKeeper().NotUsageListForGivenTimeFrame(startTime, endTime);
         }
 
         #region Event Handlers

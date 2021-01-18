@@ -8,8 +8,14 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="290,169,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="315,305,0,0" VerticalAlignment="Top" Width="75"
-                Click="Button_Click"/>
+        <Button Content="Overall usage" HorizontalAlignment="Left" Margin="315,305,0,0" VerticalAlignment="Top" Width="100"
+                Click="Overall_Usage_Btn_Click"/>
+
+        <Button Content="Usage in blocks" HorizontalAlignment="Left" Margin="315,335,0,0" VerticalAlignment="Top" Width="100"
+                Click="Usage_In_Blocks_Click"/>
+
+        <Button Content="Gaps in usage" HorizontalAlignment="Left" Margin="315,365,0,0" VerticalAlignment="Top" Width="100"
+                Click="Gaps_In_Usage_Click"/>
 
     </Grid>
 </Window>
