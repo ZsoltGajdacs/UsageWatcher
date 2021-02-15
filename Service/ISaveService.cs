@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UsageWatcher.Enums;
 using UsageWatcher.Model;
 
 namespace UsageWatcher.Service

@@ -1,4 +1,5 @@
 ﻿using System;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher.Model
 {

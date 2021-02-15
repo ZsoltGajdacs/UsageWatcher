@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace UsageWatcher
+namespace UsageWatcher.Enums
 {
     [Serializable]
     public enum Resolution

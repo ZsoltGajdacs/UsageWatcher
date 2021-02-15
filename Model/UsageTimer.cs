@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using UsageWatcher.Events;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher.Model
 {

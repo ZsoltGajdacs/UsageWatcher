@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher.Native
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using UsageWatcher.Helpers;
 using UsageWatcher.Model;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher.Service
 {

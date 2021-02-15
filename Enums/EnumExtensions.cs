@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace UsageWatcher
+namespace UsageWatcher.Enums
 {
     /// <summary>
     /// Taken from: https://stackoverflow.com/a/19621488

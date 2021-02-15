@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using UsageWatcher;
 using UsageWatcher.Model;
+using UsageWatcher.Enums;
 
 namespace UsageWatcherProbe
 {

@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace UsageWatcher
+namespace UsageWatcher.Enums
 {
+    [Serializable]
     public enum DataPrecision
     {
         [Description("Data is kept for every usage, having a detailed record as per chosen resolution")]

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace UsageWatcher
+namespace UsageWatcher.Enums
 {
     [Serializable]
     public enum SavePreference

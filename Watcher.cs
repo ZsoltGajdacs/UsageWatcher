@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UsageWatcher.Model;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher
 {

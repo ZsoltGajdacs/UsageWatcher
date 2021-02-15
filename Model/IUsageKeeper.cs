@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher.Model
 {

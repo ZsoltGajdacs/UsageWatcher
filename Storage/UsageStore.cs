@@ -2,6 +2,7 @@
 using System;
 using UsageWatcher.Events;
 using UsageWatcher.Model;
+using UsageWatcher.Enums;
 
 namespace UsageWatcher.Storage
 {
