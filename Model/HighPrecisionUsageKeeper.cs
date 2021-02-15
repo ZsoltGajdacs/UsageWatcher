@@ -93,19 +93,22 @@ namespace UsageWatcher.Model
             {
                 isValueWrittenInRound = false;
 
-                if (notUsageBlock.StartTime == default && notUsageBlock.EndTime == default && isValueWrittenInRound == false)
+                if (notUsageBlock.StartTime == default && notUsageBlock.EndTime == default 
+                    && !isValueWrittenInRound)
                 {
                     notUsageBlock.StartTime = block.EndTime;
                     isValueWrittenInRound = true;
                 }
 
-                if (notUsageBlock.EndTime == default && notUsageBlock.StartTime != default && isValueWrittenInRound == false)
+                if (notUsageBlock.EndTime == default && notUsageBlock.StartTime != default 
+                    && !isValueWrittenInRound)
                 {
                     notUsageBlock.EndTime = block.StartTime;
                     isValueWrittenInRound = true;
                 }
 
-                if (notUsageBlock.StartTime != default && notUsageBlock.EndTime != default && isValueWrittenInRound == true)
+                if (notUsageBlock.StartTime != default && notUsageBlock.EndTime != default 
+                    && isValueWrittenInRound)
                 {
                     notUsageList.Add(notUsageBlock);
                     notUsageBlock = new UsageBlock
