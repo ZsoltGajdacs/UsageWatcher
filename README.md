@@ -1,4 +1,4 @@
-[![Quality Gate Status](https://kgcs.hu/sonar/api/project_badges/measure?project=UsageWatcher&metric=alert_status)](https://kgcs.hu/sonar/dashboard?id=UsageWatcher)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ZsoltGajdacs_UsageWatcher&metric=alert_status)](https://sonarcloud.io/dashboard?id=ZsoltGajdacs_UsageWatcher)
 # UsageWatcher
 A simple way to watch mouse and keyboard usage for tracking purposes
 
