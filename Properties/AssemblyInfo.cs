@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("UsageWatcher")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simple way to watch mouse and keyboard usage for tracking purposes")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZsGWorks")]
 [assembly: AssemblyProduct("UsageWatcher")]
-[assembly: AssemblyCopyright("Copyright © ZsGWorks 2020")]
+[assembly: AssemblyCopyright("Copyright © ZsGWorks 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
