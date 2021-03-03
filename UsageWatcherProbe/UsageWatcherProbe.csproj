@@ -98,7 +98,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UsageWatcher.csproj">
+    <ProjectReference Include="..\UsageWatcher\UsageWatcher.csproj">
       <Project>{237FD0B5-EB31-4A8A-AA70-7B2AFCEDB6BD}</Project>
       <Name>UsageWatcher</Name>
     </ProjectReference>
