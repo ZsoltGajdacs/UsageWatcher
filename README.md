@@ -1,4 +1,5 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ZsoltGajdacs_UsageWatcher&metric=alert_status)](https://sonarcloud.io/dashboard?id=ZsoltGajdacs_UsageWatcher)
+![Nuget](https://img.shields.io/nuget/v/ZsGWorks.UsageWatcher)
 # UsageWatcher
 A simple way to watch mouse and keyboard usage for tracking purposes
 
