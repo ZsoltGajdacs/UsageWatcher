@@ -55,6 +55,7 @@ namespace UsageWatcher.Model
 
             List<UsageBlock> blockList = new List<UsageBlock>();
             UsageBlock block = new UsageBlock();
+            TimeSpan maxAllowedGapInMillis = TimeSpan.FromMilliseconds((int)Res + (int)Res / 4);
             foreach (UsageModel usage in filteredUsages)
             {
                 if (block.StartTime == default && block.EndTime == default)
@@ -63,7 +64,7 @@ namespace UsageWatcher.Model
                     block.EndTime = usage.EndTime;
                 }
 
-                if ((usage.StartTime - block.EndTime) <= TimeSpan.FromMilliseconds((int)Res))
+                if ((usage.StartTime - block.EndTime) <= maxAllowedGapInMillis)
                 {
                     block.EndTime = usage.EndTime;
                 }

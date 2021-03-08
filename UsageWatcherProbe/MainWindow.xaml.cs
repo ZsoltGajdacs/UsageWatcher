@@ -56,7 +56,9 @@ namespace UsageWatcherProbe
                 sb.Append(block.StartTime);
                 sb.Append(" -> ");
                 sb.Append(block.EndTime);
-                sb.Append(Environment.NewLine);
+                sb.Append(' ');
+                sb.Append(block.EndTime - block.StartTime);
+                sb.AppendLine();
             }
 
             return sb.ToString();
