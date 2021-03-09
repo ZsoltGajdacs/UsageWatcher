@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using UsageWatcher.Enums;
 
 namespace UsageWatcher.Model
@@ -13,6 +14,15 @@ namespace UsageWatcher.Model
         {
             StartTime = startTime;
             EndTime = startTime + TimeSpan.FromMilliseconds((double)resolution);
+        }
+
+        [JsonConstructor]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
+            "IDE0051:Remove unused private members", Justification = "Only for Json it is used")]
+        private UsageModel(DateTime startTime, DateTime endTime)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
         }
     }
 }
