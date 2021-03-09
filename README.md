@@ -7,7 +7,7 @@ A simple way to watch mouse and keyboard usage for tracking purposes
 A central library for my own applications to watch for keyboard / mouse usage in order to track active computer use.
 
 ## Feedback
-If you feel like this is useful, or could be useful for you, feel free to create an issue with a feature request. If you think something is not working well, please create a bug report. Thank you!
+If you feel like this is useful, or could be useful for you, feel free to create a feature request. If you think something is not working well, please create a bug report. Thank you!
 
 ## How does it work
 The idea is very simple: You pass a given 'resolution', like two minutes, and any mouse or keyboard movement within that timeframe will be considered an active time.
