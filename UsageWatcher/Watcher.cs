@@ -55,7 +55,7 @@ namespace UsageWatcher
         {
             IUsageKeeper keeper = saveService.GetSavedUsages();
 
-            if (keeper == null)
+            if (keeper == null || keeper?.GetResolution() != chosenResolution)
             {
                 switch (dataPrecision)
                 {

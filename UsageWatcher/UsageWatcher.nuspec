@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>ZsGWorks.UsageWatcher</id>
-    <version>1.2.3.0</version>
+    <version>1.2.4.0</version>
     <title>UsageWatcher</title>
     <authors>Zsolt Gajdács</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">GPL-3.0-or-later</license>
     <projectUrl>https://github.com/ZsoltGajdacs/UsageWatcher</projectUrl>
     <description>A simple way to watch mouse and keyboard usage for tracking purposes</description>
-    <releaseNotes>Fix for incorrect deserialization of data</releaseNotes>
+    <releaseNotes>Fix for startup with different resolution if there's serialized data</releaseNotes>
     <copyright>Copyright © ZsGWorks 2021</copyright>
     <tags>usage usage-logger pc-usage</tags>
     <repository type="GitHub" url="https://github.com/ZsoltGajdacs/UsageWatcher" />
