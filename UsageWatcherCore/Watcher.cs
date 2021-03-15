@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
 using UsageWatcher.Enums;

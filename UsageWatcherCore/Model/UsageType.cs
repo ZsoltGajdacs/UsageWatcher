@@ -1,4 +1,4 @@
-﻿namespace UsageWatcher.Model
+﻿namespace UsageWatcher.Models
 {
     internal enum UsageType
     {

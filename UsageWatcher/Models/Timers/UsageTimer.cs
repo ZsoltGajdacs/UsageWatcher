@@ -3,7 +3,7 @@ using System.Timers;
 using UsageWatcher.Events;
 using UsageWatcher.Enums;
 
-namespace UsageWatcher.Model
+namespace UsageWatcher.Models
 {
     internal class UsageTimer : IDisposable
     {
@@ -21,7 +21,7 @@ namespace UsageWatcher.Model
             resolutionTimer.Enabled = false;
         }
 
-        public void Start()
+        public void StartOnce()
         {
             if (!resolutionTimer.Enabled)
             {

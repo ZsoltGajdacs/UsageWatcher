@@ -68,7 +68,7 @@ namespace UsageWatcher.Native
 
         private static double CalcTimerFrequency(Resolution resolution, DataPrecision precision)
         {
-            double slashAmount = precision == DataPrecision.HighPrecision ? 4 : 2;
+            double slashAmount = precision == DataPrecision.High ? 4 : 2;
             return (double)resolution / slashAmount;
         }
 

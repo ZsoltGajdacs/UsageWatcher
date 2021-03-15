@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UsageWatcher.Model
+namespace UsageWatcher.Models
 {
     /// <summary>
     /// An aggragate of usage times

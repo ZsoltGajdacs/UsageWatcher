@@ -1,5 +1,5 @@
 ﻿using UsageWatcher.Enums;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 
 namespace UsageWatcher.Service
 {

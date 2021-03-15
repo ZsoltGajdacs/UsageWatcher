@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UsageWatcher.Enums;
 
-namespace UsageWatcher.Model
+namespace UsageWatcher.Models
 {
     internal interface IUsageKeeper
     {

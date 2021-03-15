@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UsageWatcher.Enums;
 
-namespace UsageWatcher.Model
+namespace UsageWatcher.Models
 {
     [Serializable]
     internal class HighPrecisionUsageKeeper : IUsageKeeper

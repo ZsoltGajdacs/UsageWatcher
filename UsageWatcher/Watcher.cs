@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
 using UsageWatcher.Enums;
@@ -23,31 +23,43 @@ namespace UsageWatcher
         /// </summary>
         /// <param name="appName">If saving is enabled the resulting file will have this as prefix</param>
         /// <param name="resolution">The smallest timeframe the software will watch for</param>
-        /// <param name="SavePreference">Dictates how usage data will be saved/stored</param>
+        /// <param name="savePreference">Dictates how usage data will be saved/stored</param>
         /// <param name="dataPrecision">Sets how fine grained the data will be</param>
         public Watcher(string appName, Resolution chosenResolution,
                                     SavePreference preference, DataPrecision dataPrecision)
         {
             ISaveService saveService = new SaveService(appName, preference, dataPrecision);
             IUsageKeeper keeper = CreateKeeper(ref saveService, dataPrecision, chosenResolution);
-            IStorage store = new UsageStore(keeper);
+            IStorage store = new UsageStorage(ref keeper, ref saveService);
 
-            wService = new WatcherService(ref store, ref saveService);
+            wService = new WatcherService(ref store);
         }
 
-        public TimeSpan UsageForGivenTimeframe(DateTime startTime, DateTime endTime)
+        public TimeSpan UsageTimeForGivenTimeframe(DateTime startTime, DateTime endTime)
         {
-            return wService.UsageForGivenTimeframe(startTime, endTime);
+            return wService.UsageTimeForGivenTimeframe(startTime, endTime);
         }
 
-        public List<UsageBlock> UsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        public List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime)
         {
-            return wService.UsageListForGivenTimeFrame(startTime, endTime);
+            return wService.BlocksOfContinousUsageForTimeFrame(startTime, endTime);
         }
 
-        public List<UsageBlock> NotUsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        public List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
+                                                                                                                TimeSpan maxAllowedGapInMillis)
         {
-            return wService.NotUsageListForGivenTimeFrame(startTime, endTime);
+            return wService.BlocksOfContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
+        }
+
+        public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            return wService.BreaksInContinousUsageForTimeFrame(startTime, endTime);
+        }
+
+        public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
+                                                                                                                TimeSpan maxAllowedGapInMillis)
+        {
+            return wService.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
 
         private static IUsageKeeper CreateKeeper(ref ISaveService saveService,
@@ -55,15 +67,15 @@ namespace UsageWatcher
         {
             IUsageKeeper keeper = saveService.GetSavedUsages();
 
-            if (keeper == null || keeper?.GetResolution() != chosenResolution)
+            if (keeper == null || keeper?.GetCurrentResolution() != chosenResolution)
             {
                 switch (dataPrecision)
                 {
-                    case DataPrecision.HighPrecision:
+                    case DataPrecision.High:
                         keeper = new HighPrecisionUsageKeeper(chosenResolution);
                         break;
 
-                    case DataPrecision.LowPrecision:
+                    case DataPrecision.Low:
                         throw new NotImplementedException();
                     //break;
 

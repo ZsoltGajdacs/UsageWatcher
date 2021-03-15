@@ -1,6 +1,6 @@
 ﻿using System;
 using UsageWatcher.Helpers;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using UsageWatcher.Enums;
 
 namespace UsageWatcher.Service

@@ -1,7 +1,7 @@
 ﻿using System;
 using UsageWatcher.Enums;
 
-namespace UsageWatcher.Model
+namespace UsageWatcher.Models
 {
     [Serializable]
     internal class UsageModel

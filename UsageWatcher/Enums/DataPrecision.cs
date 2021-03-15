@@ -9,9 +9,9 @@ namespace UsageWatcher.Enums
     {
         [Description("Data is kept for every usage, having a detailed record as per chosen resolution")]
         [Display(Name = "High Precision")]
-        HighPrecision,
+        High,
         [Description("Not Implemented yet")]
         [Display(Name = "Low Precision")]
-        LowPrecision
+        Low
     }
 }

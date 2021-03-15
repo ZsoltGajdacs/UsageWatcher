@@ -3,7 +3,7 @@ using System.Timers;
 using UsageWatcher.Events;
 using UsageWatcher.Enums;
 
-namespace UsageWatcher.Model
+namespace UsageWatcher.Models
 {
     internal class UsageTimer : IDisposable
     {

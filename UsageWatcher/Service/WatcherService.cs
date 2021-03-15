@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using UsageWatcher.Native;
 using UsageWatcher.Storage;
 
@@ -12,43 +12,54 @@ namespace UsageWatcher.Service
         private readonly MouseDetector mouse;
 
         private readonly IStorage store;
-        private readonly ISaveService saveService;
 
-        public WatcherService(ref IStorage store, ref ISaveService saveService)
+        #region CTOR
+        public WatcherService(ref IStorage store)
         {
             this.store = store ?? throw new ArgumentNullException(nameof(store));
-            this.saveService = saveService ?? throw new ArgumentNullException(nameof(saveService));
-
-            store.TimerElasped += Store_TimerElasped;
 
             keyboard = new KeyboardHook(KeyboardHook.Parameters.PassAllKeysToNextApp);
             keyboard.KeyIntercepted += Keyboard_KeyIntercepted;
 
-            mouse = new MouseDetector(store.GetResolution(), saveService.GetDataPrecision());
+            mouse = new MouseDetector(store.GetCurrentResolution(), store.GetDataPrecision());
             mouse.MouseMoved += Mouse_MouseMoved;
         }
+        #endregion
 
-        public TimeSpan UsageForGivenTimeframe(DateTime startTime, DateTime endTime)
+        #region Interface methods
+        public TimeSpan UsageTimeForGivenTimeframe(DateTime startTime, DateTime endTime)
         {
-            return store.GetUsageKeeper().GetUsageForDateRange(startTime, endTime);
+            return store.UsageTimeForGivenTimeframe(startTime, endTime);
         }
 
-        public List<UsageBlock> UsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        public List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime)
         {
-            return store.GetUsageKeeper().UsageListForGivenTimeFrame(startTime, endTime);
+            double resInMs = (double)store.GetCurrentResolution();
+            TimeSpan maxGap = TimeSpan.FromMilliseconds(resInMs + resInMs / 4);
+            return store.BlocksOfContinousUsageForTimeFrame(startTime, endTime, maxGap);
         }
 
-        public List<UsageBlock> NotUsageListForGivenTimeFrame(DateTime startTime, DateTime endTime)
+        public List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
+                                                                                                                TimeSpan maxAllowedGapInMillis)
         {
-            return store.GetUsageKeeper().NotUsageListForGivenTimeFrame(startTime, endTime);
+            return store.BlocksOfContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
+
+        public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime)
+        {
+            double resInMs = (double)store.GetCurrentResolution();
+            TimeSpan maxGap = TimeSpan.FromMilliseconds(resInMs + resInMs / 4);
+            return store.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxGap);
+        }
+
+        public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
+                                                                                                                TimeSpan maxAllowedGapInMillis)
+        {
+            return store.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
+        }
+        #endregion
 
         #region Event Handlers
-        private void Store_TimerElasped()
-        {
-            saveService.Save(store.GetUsageKeeper());
-        }
-
         private void Mouse_MouseMoved(object sender, System.Windows.Point p)
         {
             store.AddUsage();
@@ -60,11 +71,13 @@ namespace UsageWatcher.Service
         }
         #endregion
 
+        #region Dispose
         public void Dispose()
         {
             store.Dispose();
             keyboard.Dispose();
             mouse.Dispose();
         }
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using UsageWatcher.Helpers;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using UsageWatcher.Enums;
 
 namespace UsageWatcher.Service
@@ -29,6 +29,18 @@ namespace UsageWatcher.Service
                     SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
                     break;
 
+                case SavePreference.KeepDataForAWeek:
+                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
+                    break;
+
+                case SavePreference.KeepDataForTwoWeeks:
+                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
+                    break;
+
+                case SavePreference.KeepDataForFourWeeks:
+                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
+                    break;
+
                 case SavePreference.KeepDataForever:
                     SaveKeepingEverything(ref keeper);
                     break;
@@ -43,12 +55,12 @@ namespace UsageWatcher.Service
             IUsageKeeper keeper = null;
             switch (precision)
             {
-                case DataPrecision.HighPrecision:
+                case DataPrecision.High:
                     string path = GetSaveDirLocation() + GetSaveFileName();
                     keeper = Serializer.JsonObjectDeserialize<HighPrecisionUsageKeeper>(path);
                     break;
 
-                case DataPrecision.LowPrecision:
+                case DataPrecision.Low:
                     throw new NotImplementedException();
                 //break;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using UsageWatcher.Events;
-using UsageWatcher.Model;
+using UsageWatcher.Models;
 using UsageWatcher.Enums;
 
 namespace UsageWatcher.Storage
