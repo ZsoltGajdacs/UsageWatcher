@@ -9,6 +9,7 @@ namespace UsageWatcher.Models
     {
         void AddUsage(DateTime startTime);
         IDictionary<DateTime, List<HighPrecisionUsageModel>> GetArchivableUsages();
+        void SetCurrentResolution(Resolution newRes);
         Resolution GetCurrentResolution();
     }
 }

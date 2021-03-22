@@ -9,12 +9,12 @@ namespace UsageWatcher.Models.HighPrecision
     [Serializable]
     internal class HighPrecisionUsageToday : HighPrecisionUsageKeeper, IUsageToday
     {
-        public Resolution Res { get; private set; }
+        public Resolution CurrentResolution { get; private set; }
 
         #region CTORs
         public HighPrecisionUsageToday(Resolution res) : base()
         {
-            Res = res;
+            CurrentResolution = res;
         }
 
         [JsonConstructor]
@@ -23,13 +23,13 @@ namespace UsageWatcher.Models.HighPrecision
         private HighPrecisionUsageToday(Resolution res,
             Dictionary<DateTime, List<HighPrecisionUsageModel>> todaysUsage) : base(todaysUsage)
         {
-            Res = res;
+            CurrentResolution = res;
         }
         #endregion
 
         public void AddUsage(DateTime startTime)
         {
-            HighPrecisionUsageModel use = new HighPrecisionUsageModel(Res, startTime);
+            HighPrecisionUsageModel use = new HighPrecisionUsageModel(CurrentResolution, startTime);
 
             GetUsagesOfDate(startTime.Date, out List<HighPrecisionUsageModel> usages);
 
@@ -53,14 +53,19 @@ namespace UsageWatcher.Models.HighPrecision
             return usagesToArchive;
         }
 
+        public void SetCurrentResolution(Resolution newRes)
+        {
+            CurrentResolution = newRes;
+        }
+
         public Resolution GetCurrentResolution()
         {
-            return Res;
+            return CurrentResolution;
         }
 
         private bool IsInRecordedTimeframe(DateTime startTime, ref List<HighPrecisionUsageModel> usages)
         {
-            DateTime endTime = startTime + TimeSpan.FromMilliseconds((double)Res);
+            DateTime endTime = startTime + TimeSpan.FromMilliseconds((double)CurrentResolution);
 
             return usages.Any(u => u.StartTime <= startTime && u.EndTime >= endTime);
         }

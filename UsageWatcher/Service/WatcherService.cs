@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UsageWatcher.Enums;
 using UsageWatcher.Models;
 using UsageWatcher.Native;
 using UsageWatcher.Storage;
@@ -56,6 +57,11 @@ namespace UsageWatcher.Service
                                                                                                                 TimeSpan maxAllowedGapInMillis)
         {
             return store.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
+        }
+
+        public void SetNewResolution(Resolution resolution)
+        {
+            store.SetCurrentResolution(resolution);
         }
         #endregion
 

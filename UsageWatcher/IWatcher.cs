@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UsageWatcher.Enums;
 using UsageWatcher.Models;
 
 namespace UsageWatcher
@@ -39,5 +40,10 @@ namespace UsageWatcher
         /// </summary>
         List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
                                                                                                     TimeSpan maxAllowedGapInMillis);
+
+        /// <summary>
+        /// Change the resolution of blocks. Takes effect from the next recorded usage.
+        /// </summary>
+        void SetNewResolution(Resolution resolution);
     }
 }

@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using UsageWatcher.Enums;
 using UsageWatcher.Models;
 using UsageWatcher.Models.HighPrecision;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
-using UsageWatcher.Enums;
 
 namespace UsageWatcher
 {
     /// <summary>
-    /// Watches the system for mouse and keyboard movements
-    /// and provides you with simple booleans about system usage
+    /// Watches the system for mouse and keyboard movements and measures the time
     /// </summary>
     public class Watcher : IWatcher, IDisposable
     {
         private readonly WatcherService wService;
 
+        #region CTOR
         /// <summary>
         /// You must pass the smallest timeframe the software will watch for.
         /// Eg.: If set to TEN_MINUTES, then one mouse movement or keypress in that timeframe
@@ -38,7 +38,9 @@ namespace UsageWatcher
 
             wService = new WatcherService(ref store);
         }
+        #endregion
 
+        #region Interface methods
         public TimeSpan UsageTimeForGivenTimeframe(DateTime startTime, DateTime endTime)
         {
             return wService.UsageTimeForGivenTimeframe(startTime, endTime);
@@ -66,6 +68,13 @@ namespace UsageWatcher
             return wService.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
 
+        public void SetNewResolution(Resolution resolution)
+        {
+            wService.SetNewResolution(resolution);
+        }
+        #endregion
+
+        #region Helpers
         private static IUsageKeeper CreateOrLoadKeeper(ref ISaveService saveService, 
             DataPrecision dataPrecision, Resolution chosenResolution, SaveType saveType)
         {
@@ -90,6 +99,7 @@ namespace UsageWatcher
 
             return keeper;
         }
+        #endregion
 
         #region IDisposable Support
         private bool disposedValue; // To detect redundant calls

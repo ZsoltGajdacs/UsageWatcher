@@ -11,6 +11,7 @@ namespace UsageWatcher.Storage
         TimeSpan UsageTimeForGivenTimeframe(DateTime start, DateTime finish);
         List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, TimeSpan maxAllowedGapInMillis);
         List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, TimeSpan maxAllowedGapInMillis);
+        void SetCurrentResolution(Resolution newRes);
         Resolution GetCurrentResolution();
         DataPrecision GetDataPrecision();
     }
