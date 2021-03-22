@@ -18,8 +18,7 @@ namespace UsageWatcherProbe
             InitializeComponent();
 
             startTime = DateTime.Now;
-            watcher = new Watcher("testApp", Resolution.HalfMinute,
-                SavePreference.KeepDataForToday, DataPrecision.High);
+            watcher = new Watcher("testApp", Resolution.HalfMinute, SavePreference.KeepDataForAWeek, DataPrecision.High);
         }
 
         private void Overall_Usage_Btn_Click(object sender, RoutedEventArgs e)

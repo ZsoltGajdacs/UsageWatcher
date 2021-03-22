@@ -8,10 +8,11 @@ namespace UsageWatcher.Models
     {
         private readonly Timer saveTimer;
 
-        internal event TimerElaspedEventHandler Elasped;
+        internal event TimerElaspedEventHandler Elapsed;
 
         public SaveTimer()
         {
+            saveTimer = new Timer();
             saveTimer.AutoReset = false;
             saveTimer.Enabled = false;
             saveTimer.Elapsed += SaveTimer_Elapsed;
@@ -20,12 +21,16 @@ namespace UsageWatcher.Models
         public void StartOnce(double interval)
         {
             saveTimer.Interval = interval;
-            saveTimer.Start();
+
+            if (!saveTimer.Enabled)
+            {
+                saveTimer.Start();
+            }
         }
 
         private void SaveTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Elasped?.Invoke();
+            Elapsed?.Invoke();
         }
 
         public void Dispose()

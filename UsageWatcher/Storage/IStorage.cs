@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace UsageWatcher.Storage
 {
-    internal interface IStorage
+    internal interface IStorage : IDisposable
     {
         void AddUsage();
         TimeSpan UsageTimeForGivenTimeframe(DateTime start, DateTime finish);

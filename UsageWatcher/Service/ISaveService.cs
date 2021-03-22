@@ -5,8 +5,8 @@ namespace UsageWatcher.Service
 {
     internal interface ISaveService
     {
-        void Save(IUsageKeeper keeper);
-        IUsageKeeper GetSavedUsages();
+        void Save(IUsageKeeper keeper, SaveType type);
+        IUsageKeeper GetSavedUsages(SaveType type);
         SavePreference GetSavePreference();
         DataPrecision GetDataPrecision();
     }

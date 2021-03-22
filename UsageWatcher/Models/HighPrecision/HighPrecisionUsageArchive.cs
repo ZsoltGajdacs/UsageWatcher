@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UsageWatcher.Models.HighPrecision
 {
@@ -23,5 +21,32 @@ namespace UsageWatcher.Models.HighPrecision
         {
         }
         #endregion
+
+        public void Archive(IDictionary<DateTime, List<HighPrecisionUsageModel>> usageToArchive)
+        {
+            foreach (var elem in usageToArchive)
+            {
+                Usage.Append(elem);
+            }
+        }
+
+        public void DeleteUsagesOlderThen(int numberOfDays)
+        {
+            if (numberOfDays < 0)
+            {
+                return;
+            }
+
+            DateTime dateThreshold = DateTime.Now.Date - TimeSpan.FromDays(numberOfDays);
+            IEnumerable<DateTime> tooOldUsages = Usage
+                                                                                    .Where(k => k.Key.Date < dateThreshold.Date)
+                                                                                    .Select(k => k.Key)
+                                                                                    .ToList();
+
+            foreach (var usageDate in tooOldUsages)
+            {
+                Usage.Remove(usageDate);
+            }
+        }
     }
 }

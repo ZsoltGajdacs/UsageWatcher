@@ -9,21 +9,21 @@ namespace UsageWatcher.Enums
     {
         [Description("No data will be saved, if the app containing the lib is shut down, the data is lost.")]
         [Display(Name = "No data save")]
-        NoSave,
+        NoSave = -1,
         [Description("Data is saved for a single day.")]
         [Display(Name = "Save Today")]
-        KeepDataForToday,
+        KeepDataForToday = 0,
         [Description("Data is saved for seven days.")]
         [Display(Name = "Save 7 days")]
-        KeepDataForAWeek,
+        KeepDataForAWeek = 7,
         [Description("Data is saved for eleven days.")]
         [Display(Name = "Save 14 days")]
-        KeepDataForTwoWeeks,
+        KeepDataForTwoWeeks = 14,
         [Description("Data is saved for twenty-eight days.")]
         [Display(Name = "Save 28 days")]
-        KeepDataForFourWeeks,
-        [Description("Data is saved for every day, can be recalled any time.")]
-        [Display(Name = "Save All")]
-        KeepDataForever
+        KeepDataForFourWeeks = 28,
+        [Description("Data is kept for a whole year.")]
+        [Display(Name = "Save 1 year")]
+        KeepDataForAYear = 365
     }
 }

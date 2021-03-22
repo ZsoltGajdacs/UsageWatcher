@@ -8,8 +8,10 @@ using System.Timers;
 
 namespace UsageWatcher.Storage
 {
-    internal class UsageStorage : IStorage, IDisposable
+    internal class UsageStorage : IStorage
     {
+        private readonly List<SavePreference> noArchiveList;
+
         private readonly IUsageToday usageToday;
         private readonly IUsageArchive usageArchive;
         private readonly ISaveService saveService;
@@ -18,6 +20,7 @@ namespace UsageWatcher.Storage
         private readonly SaveTimer saveTimer;
 
         private bool isWindowsLocked;
+        
 
         #region CTOR
         public UsageStorage(ref IUsageToday usageToday, ref IUsageArchive usageArchive, ref ISaveService saveService)
@@ -26,10 +29,14 @@ namespace UsageWatcher.Storage
             this.usageArchive = usageArchive ?? throw new ArgumentNullException(nameof(usageArchive));
             this.saveService = saveService ?? throw new ArgumentNullException(nameof(saveService));
 
+            noArchiveList = new List<SavePreference>() { SavePreference.KeepDataForToday, SavePreference.NoSave };
+
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(OnWindowsLockUnlock);
 
             usageTimer = new UsageTimer(usageToday.GetCurrentResolution());
+
             saveTimer = new SaveTimer();
+            saveTimer.Elapsed += SaveTimer_Elapsed;
         }
         #endregion
 
@@ -84,6 +91,19 @@ namespace UsageWatcher.Storage
             }
         }
 
+        private void ArchiveIfNeeded()
+        {
+            var archivableUsages = usageToday.GetArchivableUsages();
+            usageArchive.Archive(archivableUsages);
+
+            SavePreference savePreference = saveService.GetSavePreference();
+            if (!noArchiveList.Contains(savePreference) && archivableUsages.Count > 0)
+            {
+                usageArchive.DeleteUsagesOlderThen((int)savePreference);
+                saveService.Save(usageArchive, SaveType.Archive);
+            }
+        }
+
         private bool HasLastTimeFramePassed()
         {
             return !usageTimer.IsActive;
@@ -101,9 +121,10 @@ namespace UsageWatcher.Storage
         #endregion
 
         #region Event handlers
-        private void SaveTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void SaveTimer_Elapsed()
         {
-            saveService.Save(usageToday);
+            ArchiveIfNeeded();
+            saveService.Save(usageToday, SaveType.Today);
         }
 
         private void OnWindowsLockUnlock(object sender, SessionSwitchEventArgs e)

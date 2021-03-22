@@ -2,7 +2,7 @@
 using System;
 using UsageWatcher.Enums;
 
-namespace UsageWatcher.Models
+namespace UsageWatcher.Models.HighPrecision
 {
     [Serializable]
     public class HighPrecisionUsageModel
@@ -15,6 +15,7 @@ namespace UsageWatcher.Models
         {
             StartTime = startTime;
             EndTime = startTime + TimeSpan.FromMilliseconds((double)resolution);
+            Resolution = resolution;
         }
 
         [JsonConstructor]

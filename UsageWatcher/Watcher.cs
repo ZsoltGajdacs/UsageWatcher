@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UsageWatcher.Models;
+using UsageWatcher.Models.HighPrecision;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
 using UsageWatcher.Enums;
@@ -29,8 +30,11 @@ namespace UsageWatcher
                                     SavePreference preference, DataPrecision dataPrecision)
         {
             ISaveService saveService = new SaveService(appName, preference, dataPrecision);
-            IUsageKeeper keeper = CreateKeeper(ref saveService, dataPrecision, chosenResolution);
-            IStorage store = new UsageStorage(ref keeper, ref saveService);
+            IUsageToday today = (IUsageToday)CreateOrLoadKeeper(ref saveService, dataPrecision, 
+                                                                                                        chosenResolution, SaveType.Today);
+            IUsageArchive archive = (IUsageArchive)CreateOrLoadKeeper(ref saveService, dataPrecision, 
+                                                                                                                chosenResolution, SaveType.Archive);
+            IStorage store = new UsageStorage(ref today, ref archive, ref saveService);
 
             wService = new WatcherService(ref store);
         }
@@ -62,25 +66,25 @@ namespace UsageWatcher
             return wService.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
 
-        private static IUsageKeeper CreateKeeper(ref ISaveService saveService,
-                                                                    DataPrecision dataPrecision, Resolution chosenResolution)
+        private static IUsageKeeper CreateOrLoadKeeper(ref ISaveService saveService, 
+            DataPrecision dataPrecision, Resolution chosenResolution, SaveType saveType)
         {
-            IUsageKeeper keeper = saveService.GetSavedUsages();
+            IUsageKeeper keeper = saveService.GetSavedUsages(saveType);
 
-            if (keeper == null || keeper?.GetCurrentResolution() != chosenResolution)
+            if (keeper == null)
             {
-                switch (dataPrecision)
+                if (dataPrecision == DataPrecision.High)
                 {
-                    case DataPrecision.High:
-                        keeper = new HighPrecisionUsageKeeper(chosenResolution);
-                        break;
-
-                    case DataPrecision.Low:
-                        throw new NotImplementedException();
-                    //break;
-
-                    default:
-                        break;
+                    if (saveType == SaveType.Today)
+                    {
+                        keeper = new HighPrecisionUsageToday(chosenResolution);
+                    } else
+                    {
+                        keeper = new HighPrecisionUsageArchive();
+                    }
+                } else
+                {
+                    throw new NotImplementedException();
                 }
             }
 

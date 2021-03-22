@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UsageWatcher.Models
+namespace UsageWatcher.Models.HighPrecision
 {
     [Serializable]
     internal abstract class HighPrecisionUsageKeeper : IUsageKeeper
@@ -17,7 +17,7 @@ namespace UsageWatcher.Models
 
         protected HighPrecisionUsageKeeper(IDictionary<DateTime, List<HighPrecisionUsageModel>> usage)
         {
-            Usage = usage ?? throw new ArgumentNullException(nameof(usage));
+            Usage = usage;
         }
         #endregion
 
@@ -106,8 +106,8 @@ namespace UsageWatcher.Models
             GetUsagesOfDate(start.Date, out List<HighPrecisionUsageModel> usages);
 
             return usages
-            .Where(u => (u.StartTime >= start) && (u.EndTime <= finish))
-            .ToList();
+                        .Where(u => (u.StartTime >= start) && (u.EndTime <= finish))
+                        .ToList();
         }
 
         protected void GetUsagesOfDate(DateTime date, out List<HighPrecisionUsageModel> usages)

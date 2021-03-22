@@ -11,6 +11,7 @@ namespace UsageWatcher.Models.HighPrecision
     {
         public Resolution Res { get; private set; }
 
+        #region CTORs
         public HighPrecisionUsageToday(Resolution res) : base()
         {
             Res = res;
@@ -24,6 +25,7 @@ namespace UsageWatcher.Models.HighPrecision
         {
             Res = res;
         }
+        #endregion
 
         public void AddUsage(DateTime startTime)
         {
@@ -35,6 +37,20 @@ namespace UsageWatcher.Models.HighPrecision
             {
                 usages.Add(use);
             }
+        }
+
+        public IDictionary<DateTime, List<HighPrecisionUsageModel>> GetArchivableUsages()
+        {
+             var usagesToArchive = Usage
+                                                    .Where(u => u.Key.Date < DateTime.Now.Date)
+                                                    .ToDictionary(k => k.Key, v => v.Value);
+
+            foreach (var dateElem in usagesToArchive.Keys)
+            {
+                Usage.Remove(dateElem);
+            }
+
+            return usagesToArchive;
         }
 
         public Resolution GetCurrentResolution()

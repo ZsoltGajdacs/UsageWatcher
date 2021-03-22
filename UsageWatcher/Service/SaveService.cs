@@ -2,70 +2,54 @@
 using UsageWatcher.Helpers;
 using UsageWatcher.Models;
 using UsageWatcher.Enums;
+using UsageWatcher.Models.HighPrecision;
+using UsageWatcher.Native;
 
 namespace UsageWatcher.Service
 {
     internal class SaveService : ISaveService
     {
         private const string TODAY_PREFIX = "td_";
-        private const string FILE_SUFFIX = "_usagestore.json";
+        private const string ARCHIVE_PREFIX = "arc_";
+        private const string FILE_SUFFIX = "_usage.json";
 
         private readonly SavePreference preference;
         private readonly DataPrecision precision;
-        private readonly string savePrefix;
+        private readonly string appName;
 
-        public SaveService(string savePrefix, SavePreference preference, DataPrecision precision)
+        public SaveService(string appName, SavePreference preference, DataPrecision precision)
         {
-            this.savePrefix = savePrefix;
+            this.appName = appName;
             this.preference = preference;
             this.precision = precision;
         }
 
-        public void Save(IUsageKeeper keeper)
+        public void Save(IUsageKeeper keeper, SaveType type)
         {
-            switch (preference)
+            if (preference == SavePreference.NoSave)
             {
-                case SavePreference.KeepDataForToday:
-                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
-                    break;
+                return;
+            }
 
-                case SavePreference.KeepDataForAWeek:
-                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
-                    break;
-
-                case SavePreference.KeepDataForTwoWeeks:
-                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
-                    break;
-
-                case SavePreference.KeepDataForFourWeeks:
-                    SaveOnlyKeepingDate(ref keeper, DateTime.Now.Date);
-                    break;
-
-                case SavePreference.KeepDataForever:
-                    SaveKeepingEverything(ref keeper);
-                    break;
-
-                default:
-                    break;
+            if (DiskStatusChecker.IsDiskPowered() || type == SaveType.Archive)
+            {
+                Serializer.JsonObjectSerialize(GetSaveDirLocation(), GetSaveFileName(type), ref keeper, DoBackup.Yes);
             }
         }
-
-        public IUsageKeeper GetSavedUsages()
+        
+        public IUsageKeeper GetSavedUsages(SaveType type)
         {
-            IUsageKeeper keeper = null;
-            switch (precision)
+            IUsageKeeper keeper;
+            if (precision == DataPrecision.High)
             {
-                case DataPrecision.High:
-                    string path = GetSaveDirLocation() + GetSaveFileName();
-                    keeper = Serializer.JsonObjectDeserialize<HighPrecisionUsageKeeper>(path);
-                    break;
+                string path = GetSaveDirLocation() + GetSaveFileName(type);
 
-                case DataPrecision.Low:
-                    throw new NotImplementedException();
-                //break;
-
-                default:
-                    break;
+                keeper = type == SaveType.Today
+                                    ? Serializer.JsonObjectDeserialize<HighPrecisionUsageToday>(path)
+                                    : Serializer.JsonObjectDeserialize<HighPrecisionUsageKeeper>(path);
+            } else
+            {
+                throw new NotImplementedException();
             }
 
             return keeper;
@@ -81,36 +65,11 @@ namespace UsageWatcher.Service
             return precision;
         }
 
-        private void SaveOnlyKeepingDate(ref IUsageKeeper keeper, DateTime date)
+        private string GetSaveFileName(SaveType type)
         {
-            keeper.EraseUsageNotOfDate(date.Date);
+            string prefix = type == SaveType.Today ? TODAY_PREFIX : ARCHIVE_PREFIX;
 
-            Serializer.JsonObjectSerialize(GetSaveDirLocation(), GetSaveFileName(), ref keeper, DoBackup.Yes);
-        }
-
-        private void SaveKeepingEverything(ref IUsageKeeper keeper)
-        {
-            Serializer.JsonObjectSerialize(GetSaveDirLocation(), GetSaveFileName(), ref keeper, DoBackup.Yes);
-        }
-
-        private string GetSaveFileName()
-        {
-            string fileName = String.Empty;
-            switch (preference)
-            {
-                case SavePreference.KeepDataForToday:
-                    fileName = TODAY_PREFIX + savePrefix + FILE_SUFFIX;
-                    break;
-
-                case SavePreference.KeepDataForever:
-                    fileName = savePrefix + FILE_SUFFIX;
-                    break;
-
-                default:
-                    break;
-            }
-
-            return fileName;
+            return  prefix + appName + FILE_SUFFIX;
         }
 
         private static string GetSaveDirLocation()
