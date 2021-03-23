@@ -41,11 +41,11 @@ namespace UsageWatcher.Models.HighPrecision
 
         public IDictionary<DateTime, List<HighPrecisionUsageModel>> GetArchivableUsages()
         {
-             var usagesToArchive = Usage
+            Dictionary<DateTime, List<HighPrecisionUsageModel>> usagesToArchive = Usage
                                                     .Where(u => u.Key.Date < DateTime.Now.Date)
                                                     .ToDictionary(k => k.Key, v => v.Value);
 
-            foreach (var dateElem in usagesToArchive.Keys)
+            foreach (DateTime dateElem in usagesToArchive.Keys)
             {
                 Usage.Remove(dateElem);
             }

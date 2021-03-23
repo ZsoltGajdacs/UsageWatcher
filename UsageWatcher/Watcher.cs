@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UsageWatcher.Enums;
 using UsageWatcher.Models;
 using UsageWatcher.Models.HighPrecision;
 using UsageWatcher.Service;
 using UsageWatcher.Storage;
 
+[assembly: InternalsVisibleTo("UsageWatcherTest")]
 namespace UsageWatcher
 {
     /// <summary>
