@@ -16,8 +16,8 @@ namespace UsageWatcher.Models.HighPrecision
         [JsonConstructor]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
             "IDE0051:Remove unused private members", Justification = "Only for Json it is used")]
-        private HighPrecisionUsageArchive(Dictionary<DateTime, List<HighPrecisionUsageModel>> todaysUsage) 
-            : base(todaysUsage)
+        private HighPrecisionUsageArchive(Dictionary<DateTime, List<HighPrecisionUsageModel>> usage) 
+            : base(usage)
         {
         }
         #endregion

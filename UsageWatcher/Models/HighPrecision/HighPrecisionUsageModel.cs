@@ -21,10 +21,11 @@ namespace UsageWatcher.Models.HighPrecision
         [JsonConstructor]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
             "IDE0051:Remove unused private members", Justification = "Only for Json it is used")]
-        private HighPrecisionUsageModel(DateTime startTime, DateTime endTime)
+        private HighPrecisionUsageModel(DateTime startTime, DateTime endTime, Resolution resolution)
         {
             StartTime = startTime;
             EndTime = endTime;
+            Resolution = resolution;
         }
     }
 }

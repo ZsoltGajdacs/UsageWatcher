@@ -39,7 +39,7 @@ namespace UsageWatcher.Helpers
 
                     JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
                     {
-                        MissingMemberHandling = MissingMemberHandling.Ignore
+                        MissingMemberHandling = MissingMemberHandling.Error
                     };
 
                     return JsonConvert.DeserializeObject<T>(fileContents, jsonSerializerSettings);

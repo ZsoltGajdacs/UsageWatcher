@@ -20,10 +20,10 @@ namespace UsageWatcher.Models.HighPrecision
         [JsonConstructor]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
             "IDE0051:Remove unused private members", Justification = "Only for Json it is used")]
-        private HighPrecisionUsageToday(Resolution res,
-            Dictionary<DateTime, List<HighPrecisionUsageModel>> todaysUsage) : base(todaysUsage)
+        private HighPrecisionUsageToday(Resolution currentResolution,
+            Dictionary<DateTime, List<HighPrecisionUsageModel>> usage) : base(usage)
         {
-            CurrentResolution = res;
+            CurrentResolution = currentResolution;
         }
         #endregion
 
