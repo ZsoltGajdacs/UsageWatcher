@@ -31,10 +31,7 @@ namespace UsageWatcher.Service
                 return;
             }
 
-            if (DiskStatusChecker.IsDiskPowered() || type == SaveType.Archive)
-            {
-                Serializer.JsonObjectSerialize(GetSaveDirLocation(), GetSaveFileName(type), ref keeper, DoBackup.Yes);
-            }
+            Serializer.JsonObjectSerialize(GetSaveDirLocation(), GetSaveFileName(type), ref keeper, DoBackup.Yes);
         }
         
         public IUsageKeeper GetSavedUsages(SaveType type)
