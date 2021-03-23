@@ -26,7 +26,7 @@ namespace UsageWatcher.Models.HighPrecision
         {
             foreach (var elem in usageToArchive)
             {
-                Usage.Append(elem);
+                Usage.Add(elem.Key, elem.Value);
             }
         }
 
@@ -39,9 +39,9 @@ namespace UsageWatcher.Models.HighPrecision
 
             DateTime dateThreshold = DateTime.Now.Date - TimeSpan.FromDays(numberOfDays);
             IEnumerable<DateTime> tooOldUsages = Usage
-                                                                                    .Where(k => k.Key.Date < dateThreshold.Date)
-                                                                                    .Select(k => k.Key)
-                                                                                    .ToList();
+                                                    .Where(k => k.Key.Date < dateThreshold.Date)
+                                                    .Select(k => k.Key)
+                                                    .ToList();
 
             foreach (var usageDate in tooOldUsages)
             {
