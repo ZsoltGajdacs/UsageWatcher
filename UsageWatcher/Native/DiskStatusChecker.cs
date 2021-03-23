@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace UsageWatcher.Native
 {
-    internal class DiskStatusChecker
+    internal static class DiskStatusChecker
     {
         public static bool IsDiskPowered()
         {
@@ -17,12 +17,9 @@ namespace UsageWatcher.Native
                 {
                     IntPtr hFile = file.SafeFileHandle.DangerousGetHandle();
                     bool result = GetDevicePowerState(hFile, out bool fOn);
-                    if (result)
+                    if (result && !fOn)
                     {
-                        if (!fOn)
-                        {
-                            isPowered = false;
-                        }
+                        isPowered = false;
                     }
                 }
             }
