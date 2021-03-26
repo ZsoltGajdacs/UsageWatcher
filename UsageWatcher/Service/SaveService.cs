@@ -41,9 +41,13 @@ namespace UsageWatcher.Service
             {
                 string path = GetSaveDirLocation() + GetSaveFileName(type);
 
-                keeper = type == SaveType.Today
-                                    ? Serializer.JsonObjectDeserialize<HighPrecisionUsageToday>(path)
-                                    : Serializer.JsonObjectDeserialize<HighPrecisionUsageKeeper>(path);
+                if (type == SaveType.Today)
+                {
+                    keeper = Serializer.JsonObjectDeserialize<HighPrecisionUsageToday>(path);
+                } else
+                {
+                    keeper = Serializer.JsonObjectDeserialize<HighPrecisionUsageArchive>(path);
+                }
             } else
             {
                 throw new NotImplementedException();

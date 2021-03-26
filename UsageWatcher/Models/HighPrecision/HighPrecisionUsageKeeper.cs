@@ -17,7 +17,7 @@ namespace UsageWatcher.Models.HighPrecision
 
         protected HighPrecisionUsageKeeper(IDictionary<DateTime, List<HighPrecisionUsageModel>> usage)
         {
-            Usage = usage;
+            Usage = usage ?? new Dictionary<DateTime, List<HighPrecisionUsageModel>>();
         }
         #endregion
 
