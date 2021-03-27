@@ -14,7 +14,7 @@ namespace UsageWatcher.Models.HighPrecision
         public HighPrecisionUsageModel(Resolution resolution, DateTime startTime)
         {
             StartTime = startTime;
-            EndTime = startTime + TimeSpan.FromMilliseconds((double)resolution);
+            EndTime = CalcEndtime(startTime, resolution);
             Resolution = resolution;
         }
 
@@ -23,9 +23,26 @@ namespace UsageWatcher.Models.HighPrecision
             "IDE0051:Remove unused private members", Justification = "Only for Json it is used")]
         private HighPrecisionUsageModel(DateTime startTime, DateTime endTime, Resolution resolution)
         {
-            StartTime = startTime;
-            EndTime = endTime;
-            Resolution = resolution;
+            if (IsValid(startTime, endTime, resolution))
+            {
+                StartTime = startTime;
+                EndTime = endTime;
+                Resolution = resolution;
+            }
+            else
+            {
+                throw new ArgumentException("Start and endtimes are not matched to the given resolution");
+            }
+        }
+
+        private bool IsValid(DateTime startTime, DateTime endTime, Resolution resolution)
+        {
+            return CalcEndtime(startTime, resolution) == endTime;
+        }
+
+        private DateTime CalcEndtime(DateTime startTime, Resolution resolution)
+        {
+            return startTime + TimeSpan.FromMilliseconds((double)resolution);
         }
     }
 }

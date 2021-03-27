@@ -17,7 +17,14 @@ namespace UsageWatcher.Models.HighPrecision
 
         protected HighPrecisionUsageKeeper(IDictionary<DateTime, List<HighPrecisionUsageModel>> usage)
         {
-            Usage = usage ?? new Dictionary<DateTime, List<HighPrecisionUsageModel>>();
+            if (IsDictDataValid(ref usage))
+            {
+                Usage = usage;
+            }
+            else
+            {
+                Usage = new Dictionary<DateTime, List<HighPrecisionUsageModel>>();
+            }
         }
         #endregion
 
@@ -118,6 +125,27 @@ namespace UsageWatcher.Models.HighPrecision
                 usages = new List<HighPrecisionUsageModel>();
                 Usage.Add(date.Date, usages);
             }
+        }
+
+        private bool IsDictDataValid(ref IDictionary<DateTime, List<HighPrecisionUsageModel>> usage)
+        {
+            if (usage == null)
+            {
+                return false;
+            }
+
+            bool isValid = false;
+            foreach (DateTime dateKey in usage.Keys)
+            {
+                usage.TryGetValue(dateKey, out List<HighPrecisionUsageModel> usageList);
+
+                if (usageList != null && usageList.Count > 0)
+                {
+                    isValid = !usageList.Any(u => u.StartTime.Date != dateKey);
+                }
+            }
+
+            return isValid;
         }
     }
 }
