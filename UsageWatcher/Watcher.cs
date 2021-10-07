@@ -53,8 +53,7 @@ namespace UsageWatcher
             return wService.BlocksOfContinousUsageForTimeFrame(startTime, endTime);
         }
 
-        public List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
-                                                                                                                TimeSpan maxAllowedGapInMillis)
+        public List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, TimeSpan maxAllowedGapInMillis)
         {
             return wService.BlocksOfContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
@@ -64,10 +63,14 @@ namespace UsageWatcher
             return wService.BreaksInContinousUsageForTimeFrame(startTime, endTime);
         }
 
-        public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
-                                                                                                                TimeSpan maxAllowedGapInMillis)
+        public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, TimeSpan maxAllowedGapInMillis)
         {
             return wService.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
+        }
+
+        public List<DateTime> ListOfDaysWithUsageData()
+        {
+            return wService.ListOfDaysWithUsageData();
         }
 
         public void SetNewResolution(Resolution resolution)

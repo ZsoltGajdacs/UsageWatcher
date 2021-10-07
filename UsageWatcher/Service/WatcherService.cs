@@ -59,6 +59,11 @@ namespace UsageWatcher.Service
             return store.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
 
+        public List<DateTime> ListOfDaysWithUsageData()
+        {
+            return store.ListDatesWithData();
+        }
+
         public void SetNewResolution(Resolution resolution)
         {
             store.SetCurrentResolution(resolution);

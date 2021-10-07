@@ -25,8 +25,7 @@ namespace UsageWatcher
         /// Ex: If set to 10 minutes then if you used the computer from 9:00AM to 9:05AM and then again from 9:15AM to 9:20AM
         /// it will be considered as an block
         /// </summary>
-        List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
-                                                                                                    TimeSpan maxAllowedGapInMillis);
+        List<UsageBlock> BlocksOfContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, TimeSpan maxAllowedGapInMillis);
 
         /// <summary>
         /// The inverse of the continous usageblock list: gives back the times between continous usages
@@ -38,8 +37,12 @@ namespace UsageWatcher
         /// Here you can set the max length between separate usages that will still be considered a block. 
         /// (And you're getting the breaks in that)
         /// </summary>
-        List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
-                                                                                                    TimeSpan maxAllowedGapInMillis);
+        List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, TimeSpan maxAllowedGapInMillis);
+
+        /// <summary>
+        /// Returns a list of dates for which there is usage data available
+        /// </summary>
+        List<DateTime> ListOfDaysWithUsageData();
 
         /// <summary>
         /// Change the resolution of blocks. Takes effect from the next recorded usage.

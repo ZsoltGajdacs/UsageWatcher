@@ -67,6 +67,14 @@ namespace UsageWatcher.Storage
             return ChooseKeeperForDate(startTime.Date).BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
 
+        public List<DateTime> ListDatesWithData()
+        {
+            List<DateTime> dateList = usageArchive.ListDatesWithData();
+            dateList.Add(DateTime.Today);
+
+            return dateList;
+        }
+
         public void SetCurrentResolution(Resolution newRes)
         {
             usageToday.SetCurrentResolution(newRes);

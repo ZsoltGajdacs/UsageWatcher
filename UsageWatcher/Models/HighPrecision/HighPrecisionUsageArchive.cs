@@ -30,6 +30,11 @@ namespace UsageWatcher.Models.HighPrecision
             }
         }
 
+        public List<DateTime> ListDatesWithData()
+        {
+            return Usage.Keys.ToList();
+        }
+
         public void DeleteUsagesOlderThen(int numberOfDays)
         {
             if (numberOfDays < 0)
