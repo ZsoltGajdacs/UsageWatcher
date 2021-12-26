@@ -1,10 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using UsageWatcher.Models;
-using UsageWatcher.Enums;
 using System.Collections.Generic;
+using UsageWatcher.Enums;
+using UsageWatcher.Models;
 using UsageWatcher.Service;
-using System.Timers;
 
 namespace UsageWatcher.Storage
 {
@@ -20,7 +19,6 @@ namespace UsageWatcher.Storage
         private readonly SaveTimer saveTimer;
 
         private bool isWindowsLocked;
-        
 
         #region CTOR
         public UsageStorage(ref IUsageToday usageToday, ref IUsageArchive usageArchive, ref ISaveService saveService)

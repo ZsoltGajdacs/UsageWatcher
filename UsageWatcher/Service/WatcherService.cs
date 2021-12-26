@@ -54,7 +54,7 @@ namespace UsageWatcher.Service
         }
 
         public List<UsageBlock> BreaksInContinousUsageForTimeFrame(DateTime startTime, DateTime endTime, 
-                                                                                                                TimeSpan maxAllowedGapInMillis)
+                                                                         TimeSpan maxAllowedGapInMillis)
         {
             return store.BreaksInContinousUsageForTimeFrame(startTime, endTime, maxAllowedGapInMillis);
         }
