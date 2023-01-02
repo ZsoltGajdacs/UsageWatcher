@@ -16,7 +16,7 @@
     <Description>A simple way to watch mouse and keyboard usage for time tracking purposes</Description>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <RootNamespace>UsageWatcher</RootNamespace>
-    <Version>1.2.2</Version>
+    <Version>1.2.3</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
